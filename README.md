@@ -1,3 +1,3 @@
 # WordPress-WooCommerce-Overrides
-Code Snippets of me overriding and hijacking some of WooCommerce's Templates.
+Code Snippets of overriding and hijacking some of WooCommerce's Templates.
 This is useable for all.
