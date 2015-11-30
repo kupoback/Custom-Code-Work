@@ -1,44 +1,73 @@
-nav {
-  float: right; }
+/*
+Error: Invalid CSS after "          color: ": expected expression (e.g. 1px, bold), was "$"
+        on line 66 of main.scss
 
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0; }
+61:         background: $nav-background;
+62:         color: $nav-font-color;
+63:         text-decoration: none;
+64:         &:hover {
+65:           background: $link-hover-color;
+66:           color: $
+67:         }
+68:       }
+69:     }
+70:   }
+71: }
 
-li {
-  float: left;
-  position: relative; }
-
-a {
-  display: block;
-  padding: 0 20px;
-  line-height: 70px;
-  background: #262626;
-  color: #ffffff;
-  text-decoration: none; }
-  a:hover {
-    background: #2581DC;
-    color: #ffffff; }
-  a:not(:only-child):after {
-    padding-left: 4px;
-    content: "";
-    border-top: 10px solid #000000;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: none; }
-
-ul.nav-dropdown {
-  display: none;
-  position: absolute;
-  z-index: 1;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15); }
-
-li {
-  min-width: 190px; }
-
-a {
-  padding: 15px;
-  line-height: 20px; }
-
-/*# sourceMappingURL=main.css.map */
+Backtrace:
+main.scss:66
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:1161:in `expected'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/script/lexer.rb:221:in `expected!'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/script/parser.rb:571:in `assert_expr'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/script/parser.rb:62:in `parse'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:1023:in `sass_script'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:876:in `value!'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:749:in `block in try_declaration'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:1137:in `call'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:1137:in `rethrow'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:762:in `try_declaration'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:692:in `declaration_or_ruleset'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:657:in `block_child'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:649:in `block_contents'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:638:in `block'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:707:in `declaration_or_ruleset'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:657:in `block_child'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:649:in `block_contents'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:638:in `block'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:707:in `declaration_or_ruleset'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:657:in `block_child'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:649:in `block_contents'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:638:in `block'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:707:in `declaration_or_ruleset'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:657:in `block_child'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:649:in `block_contents'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:638:in `block'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:707:in `declaration_or_ruleset'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:657:in `block_child'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:649:in `block_contents'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:638:in `block'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:631:in `ruleset'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:656:in `block_child'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:649:in `block_contents'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:117:in `stylesheet'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/scss/parser.rb:42:in `parse'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/engine.rb:403:in `_to_tree'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/engine.rb:378:in `_render_with_sourcemap'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/engine.rb:295:in `render_with_sourcemap'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:490:in `update_stylesheet'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:209:in `each'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:470:in `on_file_changed'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:328:in `block in watch'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/vendor/listen/lib/listen/listener.rb:252:in `call'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/vendor/listen/lib/listen/listener.rb:252:in `on_change'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/vendor/listen/lib/listen/adapters/polling.rb:48:in `call'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/vendor/listen/lib/listen/adapters/polling.rb:48:in `poll_changed_directories'
+C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.19/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid CSS after \"          color: \": expected expression (e.g. 1px, bold), was \"$\"\A         on line 66 of main.scss\A \A 61:         background: $nav-background;\A 62:         color: $nav-font-color;\A 63:         text-decoration: none;\A 64:         &:hover {\A 65:           background: $link-hover-color;\A 66:           color: $\A 67:         }\A 68:       }\A 69:     }\A 70:   }\A 71: }"; }
