@@ -1,0 +1,398 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<campaigns>
+    <campaign id="Bowhunters Alert" status="1">
+        <subject>Bowhunter's Alert</subject>
+        <constantcontact id="9" fromname="Bowhunting.com" fromemailid="2" fromemail="email@bowhunting.com" />
+        <sections>
+            <section name="news">
+                <formats>
+                    <format type="wf.publisher.post.url">https://www.bowhunting.com/news/[year]/[month]/[day]/[path]/</format>
+                </formats>
+                <sql>
+                    <engine>mysql</engine>
+                    <conn><![CDATA[Server=www.bowhunting.com;Database=wp_bowhunting;UID=bowhunting;PWD=L59OpLmOE16i5Gw1]]></conn>
+                    <query>
+                        <![CDATA[SELECT post_title AS _title, post_date AS _date_published, post_name AS _rewrite_url FROM wp_posts
+                                  WHERE (post_status = 'publish')
+                                  AND (post_type = 'post')
+                                  AND (post_date <= NOW())
+                                  AND ID IN (
+	                                  SELECT object_id FROM wp_term_relationships WHERE term_taxonomy_id = 3)
+                                  ORDER BY post_date DESC
+                                  LIMIT 4]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="feature">
+                <formats>
+                    <format type="wf.publisher.post.url">https://www.bowhunting.com/blog/[year]/[month]/[day]/[path]/</format>
+                    <format type="wp.attachment">https://www.bowhunting.com/wp-content/uploads/[filename]</format>
+                    <format type="wp.excerpt">[teaser]</format>
+                </formats>
+                <sql>
+                    <engine>mysql</engine>
+                    <conn><![CDATA[Server=www.bowhunting.com;Database=wp_bowhunting;UID=bowhunting;PWD=L59OpLmOE16i5Gw1;]]></conn>
+                    <query>
+                      <![CDATA[SELECT a.post_title AS _title, a.post_excerpt AS _teaser, a.post_date AS _date_published, a.post_name AS _rewrite_url, REPLACE(c.meta_value, '.jpg', '-320x180.jpg') AS _preview 
+                                FROM wp_posts a
+                                LEFT JOIN wp_postmeta b
+	                                ON a.ID = b.post_id
+                                LEFT JOIN wp_postmeta c
+	                                ON b.meta_value = c.post_id
+                                WHERE (a.post_status = 'publish')
+	                                AND (a.post_type = 'post')
+	                                AND (a.post_date <= NOW())
+                                    AND (b.meta_key = '_thumbnail_id')
+                                    AND (c.meta_key = '_wp_attached_file')
+	                                AND a.ID IN (
+	                                  SELECT object_id FROM wp_term_relationships WHERE term_taxonomy_id = 2)
+                                ORDER BY a.post_date DESC
+                                LIMIT 3;]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="archive">
+                <formats>
+                    <format type="wf.publisher.post.url">https://www.bowhunting.com/blog/[year]/[month]/[day]/[path]/</format>
+                </formats>
+                <sql>
+                    <engine>mysql</engine>
+                    <conn><![CDATA[Server=www.bowhunting.com;Database=wp_bowhunting;UID=bowhunting;PWD=L59OpLmOE16i5Gw1;]]></conn>
+                    <query><![CDATA[SELECT post_title AS _title, post_date AS _date_published, post_name AS _rewrite_url FROM wp_posts WHERE post_status = 'publish' AND (post_type = 'post') AND post_date < DATE_ADD(NOW(), INTERVAL -30 DAY) AND post_date < NOW() ORDER BY post_date DESC LIMIT 10]]></query>
+                </sql>
+            </section>
+            <section name="sidebar">
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query><![CDATA[SELECT TOP 10 * FROM [Rhino_Links_Links] WHERE [_status] = 1 AND  _parent = 14 AND [_date_changed] < GETDATE() ORDER BY _id DESC]]></query>
+                </sql>
+            </section>
+        </sections>
+    </campaign>
+    <campaign id="HN Industry Newsletter" status="1">
+        <subject>Hunting Industry Newsletter</subject>
+        <constantcontact id="3" fromname="Bowhunting.com" fromemailid="2" fromemail="email@bowhunting.com" isdraft="true" />
+        <sections>
+            <section name="news">
+                <formats>
+                    <format type="wf.publisher.post.url">http://www.bowhunting.com/publisher/hunting-news/[year]/[month]/[day]/[path]</format>
+                    <format type="rhino.preview">http://www.huntingnetwork.com/preview?file=/content/modules/rhino.publisher/files/[filename]&amp;width=100&amp;height=100</format>
+                </formats>
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 3 a.* FROM Rhino_Publisher_Posts a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.publisher')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 9)
+                                AND (c._zone_id = 31)
+                                AND a._id IN (SELECT _item_id FROM HN_Core_DomainCategoryRelation 
+                                              WHERE _type = 'rhino.links' AND _category_id IN (SELECT DISTINCT _category_id 
+									                                                             FROM HN_Core_DomainCategoryRelation 
+									                                                             WHERE _item_id = 27 AND _type = 'hn.core.domainprofile'))
+                                ORDER BY _rank, _date_published DESC]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="products">
+                <formats>
+                    <format type="wf.publisher.post.url">http://www.bowhunting.com/publisher/hunting-news/[year]/[month]/[day]/[path]</format>
+                    <format type="rhino.preview">http://www.huntingnetwork.com/preview?file=/content/modules/rhino.publisher/files/[filename]&amp;width=100&amp;height=100</format>
+                </formats>
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 3 a.* FROM Rhino_Publisher_Posts a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.publisher')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 9)
+                                AND (c._zone_id = 32)
+                                AND a._id IN (SELECT _item_id FROM HN_Core_DomainCategoryRelation 
+                                              WHERE _type = 'rhino.links' AND _category_id IN (SELECT DISTINCT _category_id 
+									                                                             FROM HN_Core_DomainCategoryRelation 
+									                                                             WHERE _item_id = 27 AND _type = 'hn.core.domainprofile'))
+                                ORDER BY _rank, _date_published DESC]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="happenings">
+                <formats>
+                    <format type="wf.publisher.post.url">http://www.bowhunting.com/publisher/hunting-news/[year]/[month]/[day]/[path]</format>
+                    <format type="rhino.preview">http://www.huntingnetwork.com/preview?file=/content/modules/rhino.publisher/files/[filename]&amp;width=100&amp;height=100</format>
+                </formats>
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 3 a.* FROM Rhino_Publisher_Posts a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.publisher')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 9)
+                                AND (c._zone_id = 33)
+                                AND a._id IN (SELECT _item_id FROM HN_Core_DomainCategoryRelation 
+                                              WHERE _type = 'rhino.publisher' AND _category_id IN (SELECT DISTINCT _category_id 
+									                                                             FROM HN_Core_DomainCategoryRelation 
+									                                                             WHERE _item_id = 27 AND _type = 'hn.core.domainprofile'))
+                                ORDER BY _rank, _date_published DESC]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="bowhuntordie" enabled="false">
+                <formats>
+                    <format type="rhino.videos.video.url">http://www.bowhunting.com/videos/[category]/[path]_[id]</format>
+                    <format type="rhino.preview">http://www.bowhunting.com/preview?file=/content/modules/rhino.videogallery/files/[filename]&amp;width=100&amp;height=100</format>
+                </formats>
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Bowhunting_Core2;user=BHcore;pwd=r3vi3ws]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 2 a._id,a._name,a._description,a._rewrite_url,(CONVERT(nvarchar(20), b._id) + '/' + a._preview) AS _preview,b._name AS _category FROM [dbo].[Rhino_VideoGallery_Videos] a
+                                INNER JOIN dbo.Rhino_VideoGallery_Albums b
+                                ON a._parent = b._id
+                                WHERE a._status = 1 AND (a._parent = 73 OR a._parent =103)
+                                ORDER BY a._id DESC]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="randomvideo">
+                <formats>
+                    <format type="rhino.videos.video.url">http://www.bowhunting.com/videos/[category]/[path]_[id]</format>
+                    <format type="rhino.preview">http://www.bowhunting.com/preview?file=/content/modules/rhino.videogallery/files/[filename]&amp;width=100&amp;height=100</format>
+                </formats>
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Bowhunting_Core2;user=BHcore;pwd=r3vi3ws]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 4 a._id,a._name,a._description,a._rewrite_url,(CONVERT(nvarchar(20), b._id) + '/' + a._preview) AS _preview,b._name AS _category FROM [dbo].[Rhino_VideoGallery_Videos] a
+                                INNER JOIN dbo.Rhino_VideoGallery_Albums b
+                                ON a._parent = b._id
+                                WHERE a._status = 1 AND a._parent = 106
+                                AND a._date_changed > DATEADD(M, -12, GETDATE())
+                                ORDER BY NEWID()]]>
+                    </query>
+                    <!-- Old cat ids: a._parent IN (56,38,46) -->
+                </sql>
+            </section>
+            <section name="community">
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query><![CDATA[SELECT TOP 6 * FROM [Rhino_Links_Links] WHERE _status = 1 AND _parent = 14 ORDER BY _id DESC]]></query>
+                </sql>
+            </section>
+            <section name="banner">
+                <sql>
+                    <conn><![CDATA[Server=ICSSQL\PRODUCTION1;Database=HN_Bowhunting_Banners;UID=BowBanners;PWD=b@nn3r5]]></conn>
+                    <query>
+                        <![CDATA[SELECT * FROM [dbo].[xlaABMbanners] 
+                        WHERE [status] = 1 AND (GETDATE() BETWEEN startdate AND enddate) AND (advertiserid NOT IN (1,6)) AND [bannerid] IN 
+                        (SELECT bannerid FROM dbo.xlaABMiBannersZones WHERE zoneid = 19) ORDER BY alttext DESC]]>
+                    </query>
+                </sql>
+            </section>
+        </sections>
+    </campaign>
+    <campaign id="BH Newsletter" status="1">
+        <subject>Bowhunting.com Newsletter</subject>
+        <constantcontact id="1" fromname="Bowhunting.com" fromemailid="2" fromemail="email@bowhunting.com" isdraft="true" />
+        <sections>
+            <section name="bowhuntordie">
+                <formats>
+                    <format type="rhino.preview">http://www.huntingnetwork.com/preview?file=/content/modules/rhino.links/files/[filename]&amp;width=125&amp;height=125</format>
+                </formats>
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 1 a.* FROM Rhino_Links_Links a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.links')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 63)
+                                AND (c._zone_id = 35)
+                                AND (_date_changed < GETDATE())
+                                ORDER BY _rank, _date_changed DESC, _name]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="othervideos">
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 3 a.* FROM Rhino_Links_Links a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.links')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 63)
+                                AND (c._zone_id = 36)
+                                AND (_date_changed < GETDATE())
+                                ORDER BY _rank, _date_changed DESC, _name]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="productspotlight1">
+                <formats>
+                    <format type="rhino.preview">http://www.huntingnetwork.com/preview?file=/content/modules/rhino.links/files/[filename]&amp;width=125&amp;height=125</format>
+                </formats>
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 1 a.* FROM Rhino_Links_Links a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.links')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 63)
+                                AND (c._zone_id = 37)
+                                AND (_date_changed < GETDATE())
+                                ORDER BY _rank, _date_changed DESC, _name]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="otherproducts1">
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 3 a.* FROM Rhino_Links_Links a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.links')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 63)
+                                AND (c._zone_id = 38)
+                                AND (_date_changed < GETDATE())
+                                ORDER BY _rank, _date_changed DESC, _name]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="productspotlight2">
+                <formats>
+                    <format type="rhino.preview">http://www.huntingnetwork.com/preview?file=/content/modules/rhino.links/files/[filename]&amp;width=125&amp;height=125</format>
+                </formats>
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 1 a.* FROM Rhino_Links_Links a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.links')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 63)
+                                AND (c._zone_id = 39)
+                                AND (_date_changed < GETDATE())
+                                ORDER BY _rank, _date_changed DESC, _name]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="otherproducts2">
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 3 a.* FROM Rhino_Links_Links a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.links')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 63)
+                                AND (c._zone_id = 40)
+                                AND (_date_changed < GETDATE())
+                                ORDER BY _rank, _date_changed DESC, _name]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="productspotlight3">
+                <formats>
+                    <format type="rhino.preview">http://www.huntingnetwork.com/preview?file=/content/modules/rhino.links/files/[filename]&amp;width=125&amp;height=125</format>
+                </formats>
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 1 a.* FROM Rhino_Links_Links a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.links')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 63)
+                                AND (c._zone_id = 41)
+                                AND (_date_changed < GETDATE())
+                                ORDER BY _rank, _date_changed DESC, _name]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="otherproducts3">
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 3 a.* FROM Rhino_Links_Links a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.links')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 63)
+                                AND (c._zone_id = 42)
+                                AND (_date_changed < GETDATE())
+                                ORDER BY _rank, _date_changed DESC, _name]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="community">
+                <formats>
+                    <format type="rhino.preview">http://www.huntingnetwork.com/preview?file=/content/modules/rhino.links/files/[filename]&amp;width=125&amp;height=125</format>
+                </formats>
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 1 a.* FROM Rhino_Links_Links a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.links')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 63)
+                                AND (c._zone_id = 43)
+                                AND (_date_changed < GETDATE())
+                                ORDER BY _rank, _date_changed DESC, _name]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="othertopics">
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 3 a.* FROM Rhino_Links_Links a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.links')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 63)
+                                AND (c._zone_id = 44)
+                                AND (_date_changed < GETDATE())
+                                ORDER BY _rank, _date_changed DESC, _name]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="blog">
+                <formats>
+                    <format type="rhino.preview">http://www.huntingnetwork.com/preview?file=/content/modules/rhino.links/files/[filename]&amp;width=125&amp;height=125</format>
+                </formats>
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 1 a.* FROM Rhino_Links_Links a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.links')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 63)
+                                AND (c._zone_id = 45)
+                                AND (_date_changed < GETDATE())
+                                ORDER BY _rank, _date_changed DESC, _name]]>
+                    </query>
+                </sql>
+            </section>
+            <section name="othernews">
+                <sql>
+                    <conn><![CDATA[server=ICSSQL\PRODUCTION1;database=HN_Core;user=HNCoreUser;pwd=m@inBeam]]></conn>
+                    <query>
+                        <![CDATA[SELECT TOP 3 a.* FROM Rhino_Links_Links a
+                                INNER JOIN HN_Core_ZoneRelation c
+                                ON (c._item_id = a._id AND _component_key = 'rhino.links')
+                                WHERE (a._status = 1)
+                                AND (a._parent = 63)
+                                AND (c._zone_id = 46)
+                                AND (_date_changed < GETDATE())
+                                ORDER BY _rank, _date_changed DESC, _name]]>
+                    </query>
+                </sql>
+            </section>
+        </sections>
+    </campaign>
+</campaigns>
