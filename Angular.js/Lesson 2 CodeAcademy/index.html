@@ -13,24 +13,21 @@
         <h1>App Market</h1>
       </div>
     </div>
-
+    <!--Directives are a powerful way to create self-contained, interactive components.
+        Unlike jQuery which adds interactivity as a layer on top of HTML, AngularJS treats
+        interactivity as a native component of HTML. -->
     <div class="main" ng-controller="MainController">
       <div class="container">
-         <div class="card">
-           <!-- We call the directive that we created in the appInfo.js file
-                and we call to it like a normal HTML element with the scope attr
-                name used to gather the information
-           -->
-          <app-info info="move"></app-info>
+        <!-- ng-repeate is a built in directive that is essentially a repeater
+             element. This allows you to call to individual items within the
+             $scope by calling the app from the $scope.apps. The app is a created
+             variable within ng-repeat and thus you're giving info something to
+             call to, as each item is in an unnamed array -->
+         <div class="card" ng-repeat="app in apps">
+          <app-info info="app"></app-info>
+          <install-app></install-app>
         </div>
 
-        <div class="card">
-          <app-info info="shutterbugg"></app-info>
-        </div>
-
-        <div class="card">
-          <app-info info="gameboard"></app-info>
-        </div>
       </div>
     </div>
 
@@ -42,6 +39,6 @@
 
     <!-- Directives -->
     <script src="js/directives/appInfo.js"></script>
-
+    <script src="js/directives/installApp.js"></script>
   </body>
 </html>
