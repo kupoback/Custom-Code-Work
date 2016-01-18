@@ -1,0 +1,3 @@
+[submodule "Angular.js/Official Site Demo"]
+	path = Angular.js/Official Site Demo
+	url = ../../angular/angular-phonecat.git
