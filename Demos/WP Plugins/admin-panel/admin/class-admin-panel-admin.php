@@ -113,7 +113,6 @@ class Admin_Panel_Admin {
 	*/
 		// Takes 5 args, Page Title, Menu Title, Capabilities ( who can access ), Menu Slug, Callback Function (Where the options/content in the backend will be displayed)
 		add_options_page( 'WP Cleanup & Base Options Setup', 'WP Cleanup', 'manage_options', $this->plugin_name, array($this, 'display_plugin_setup_page' ) );
-
 	}
 
 	/**
@@ -127,9 +126,9 @@ class Admin_Panel_Admin {
 
 		// This takes 1 args, the $links array, which is then merged when returned
 		$settings_link = array(
-			'<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_name ) . '">' . __( 'Settings', $this->plugin_name ) . '</a>',
-		);
-		return array_merge( $settings_link, $links );
+			'<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_name ) . '">' . __('Settings', $this->plugin_name) . '</a>',
+			array_merge(  $settings_link, $links );
+		); 
 	}
 
 	/**
@@ -140,6 +139,35 @@ class Admin_Panel_Admin {
 		include_once( 'partials/admin-panel-admin-display.php' );
 	}
 
+	public function validate( $input ) {
 
+		// All checkbox inputs
+		$valid = array();
+
+		// Cleanup
+		// isset and !empty check whether the checkbox is marked or not.
+		$valid['cleanup'] = ( isset( $input['cleanup'] ) && !empty ( $input['cleanup'] ) ) ? 1 : 0;
+		$valid['comments_css_cleanup'] = ( isset( $input['comments_css_cleanup'] ) && !empty( $input['comments_css_cleanup'] ) ) ? 1 : 0;
+		$valid['gallery_css_cleanup'] = ( isset( $input['gallery_css_cleanup'] ) && !empty( $input['gallery_css_cleanup'] ) ) ? 1 : 0;
+		$valid['body_class_slug'] = ( isset( $input['body_class_slug'] ) && !empty( $input['body_class_slug'] ) ) ? 1 : 0;
+		$valid['jquery_cdn'] = ( isset( $input['jquery_cdn'] ) && !empty( $input['jquery_cdn'] ) ) ? 1 : 0;
+		$valid['cdn_provider'] = esc_url( $input['cdn_provider'] );
+
+		return $valid;
+
+	}
+
+	/**
+	* Save Options
+	*/
+	public function options_update() {
+		// Part of WP API,
+		// Accepts:
+		//	• option group (in this case plugin name for safety)
+		//	• option name register each option as a single, using plugin name for safety
+		//	• callback function used to sanitize our options with the validation function
+
+		register_setting( $this->plugin_name, $this->plugin_name, array( $this, 'validate' ) );
+	}
 
 }
