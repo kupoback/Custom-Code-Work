@@ -163,6 +163,7 @@ class Admin_Panel {
 
 		// Save/Update
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'options_update' );
+		
 	}
 
 	/**

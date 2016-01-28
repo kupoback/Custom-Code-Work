@@ -75,6 +75,12 @@ class Admin_Panel_Admin {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/admin-panel-admin.css', array(), $this->version, 'all' );
 
+		if ( 'setting_page_admin-panel' == get_current_screen() -> id ) {
+			// CSS stylesheet for Color Picker
+			wp_enqueue_style( 'wp-color-picker' );
+			wp_enqueue_style( $this->$plugin_name, plugin_dir_url( __FILE__ ) . 'css/admin-panel-admin.css', array('wp-color-picker'), $this->version, 'all' );
+		}
+
 	}
 
 	/**
@@ -128,7 +134,7 @@ class Admin_Panel_Admin {
 		$settings_link = array(
 			'<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_name ) . '">' . __('Settings', $this->plugin_name) . '</a>',
 			array_merge(  $settings_link, $links );
-		); 
+		);
 	}
 
 	/**
