@@ -9,6 +9,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 https://scotch.io/tutorials/how-to-build-a-wordpress-plugin-part-1
+https://scotch.io/tutorials/how-to-build-a-wordpress-plugin-part-2
 
 This is a demo, to learn how to create and set up plugins.
 

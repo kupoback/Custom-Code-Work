@@ -75,6 +75,7 @@ class Admin_Panel_Admin {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/admin-panel-admin.css', array(), $this->version, 'all' );
 
+		// Loads only if on that specific page
 		if ( 'setting_page_admin-panel' == get_current_screen() -> id ) {
 			// CSS stylesheet for Color Picker
 			wp_enqueue_style( 'wp-color-picker' );
@@ -103,6 +104,12 @@ class Admin_Panel_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/admin-panel-admin.js', array( 'jquery' ), $this->version, false );
+
+		// Loads only if on that specific page
+		if ( 'settings_page_admin-panel' == get_current_screen() -> id ) {
+			wp_enqueue_media();
+			wp_enqueue_script( $this->$plugin_name, plugin_dir_url( __FILE__ ) . 'js/admin-panel-admin.js', array( 'jquery', 'wp-color-picker' ), $this->$version, false);
+		}
 
 	}
 
@@ -147,17 +154,49 @@ class Admin_Panel_Admin {
 
 	public function validate( $input ) {
 
-		// All checkbox inputs
-		$valid = array();
+			// All checkbox inputs
+			$valid = array();
 
-		// Cleanup
-		// isset and !empty check whether the checkbox is marked or not.
-		$valid['cleanup'] = ( isset( $input['cleanup'] ) && !empty ( $input['cleanup'] ) ) ? 1 : 0;
-		$valid['comments_css_cleanup'] = ( isset( $input['comments_css_cleanup'] ) && !empty( $input['comments_css_cleanup'] ) ) ? 1 : 0;
-		$valid['gallery_css_cleanup'] = ( isset( $input['gallery_css_cleanup'] ) && !empty( $input['gallery_css_cleanup'] ) ) ? 1 : 0;
-		$valid['body_class_slug'] = ( isset( $input['body_class_slug'] ) && !empty( $input['body_class_slug'] ) ) ? 1 : 0;
-		$valid['jquery_cdn'] = ( isset( $input['jquery_cdn'] ) && !empty( $input['jquery_cdn'] ) ) ? 1 : 0;
-		$valid['cdn_provider'] = esc_url( $input['cdn_provider'] );
+			// Cleanup
+			// isset and !empty check whether the checkbox is marked or not.
+			$valid['cleanup'] = ( isset( $input['cleanup'] ) && !empty ( $input['cleanup'] ) ) ? 1 : 0;
+			$valid['comments_css_cleanup'] = ( isset( $input['comments_css_cleanup'] ) && !empty( $input['comments_css_cleanup'] ) ) ? 1 : 0;
+			$valid['gallery_css_cleanup'] = ( isset( $input['gallery_css_cleanup'] ) && !empty( $input['gallery_css_cleanup'] ) ) ? 1 : 0;
+			$valid['body_class_slug'] = ( isset( $input['body_class_slug'] ) && !empty( $input['body_class_slug'] ) ) ? 1 : 0;
+			$valid['jquery_cdn'] = ( isset( $input['jquery_cdn'] ) && !empty( $input['jquery_cdn'] ) ) ? 1 : 0;
+			$valid['cdn_provider'] = esc_url( $input['cdn_provider'] );
+
+			// Login Customization
+			//First Color Picker
+			// Checks to make sure $input is not empty
+			$valid['login_background_color'] = (isset($input['login_background_color']) && !empty($input['login_background_color'])) ? sanitize_text_field($input['login_background_color']) : '';
+
+			// If validation fails, we give the user some feedback to correct the error.
+			if ( !empty($valid['login_background_color']) && !preg_match( '/^#[a-f0-9]{6}$/i', $valid['login_background_color']  ) ) { 	// if user insert a HEX color with #
+			   add_settings_error(
+					   'login_background_color',                     		// Setting title
+					   'login_background_color_texterror',            		// Error ID
+					   'Please enter a valid hex value color',     			// Error message
+					   'error'                         						// Type of message
+			   );
+			}
+
+			//Second Color Picker
+			$valid['login_button_primary_color'] = (isset($input['login_button_primary_color']) && !empty($input['login_button_primary_color'])) ? sanitize_text_field($input['login_button_primary_color']) : '';
+
+			if ( !empty($valid['login_button_primary_color']) && !preg_match( '/^#[a-f0-9]{6}$/i', $valid['login_button_primary_color']  ) ) {  // if user insert a HEX color with #
+			   add_settings_error(
+					   'login_button_primary_color',                     	// Setting title
+					   'login_button_primary_color_texterror',            	// Error ID
+					   'Please enter a valid hex value color',     			// Error message
+					   'error'                        						// Type of message
+			   );
+		   	}
+
+			//Logo image id
+			// Checks the $input['login_logo_id'] is set, otherwise set it to 0 which is false when empty() checks it.
+			// If it is true, absint sets the int to a postive value
+	        $valid['login_logo_id'] = (isset($input['login_logo_id']) && !empty($input['login_logo_id'])) ? absint($input['login_logo_id']) : 0;
 
 		return $valid;
 
