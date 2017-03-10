@@ -8,6 +8,8 @@ $(function() {
                      // This function will get the outerHeight of the element
                      // including padding and margin
     _eleHeight  = _carouselItem.map(function() {	return $(this).outerHeight();	}).get(),
+                     // You can wrap the Math. function in a parseINT() 
+                     // if the number won't save
     _maxHeight  = Math.max.apply(null, _eleHeight);
         
         
