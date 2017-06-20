@@ -1,16 +1,44 @@
-$(function() {
-
-                     // This will be your element you're selecting getting
-                     // all the heights from. Set this to the outer most 
-                     // container of your content, unless it has to be the
-                     // box. Such as the first div before the content shows
- var _carouselItem = $( '.pageable-content' ),
-                     // This function will get the outerHeight of the element
-                     // including padding and margin
-    _eleHeight  = _carouselItem.map(function() {	return $(this).outerHeight();	}).get(),
-                     // You can wrap the Math. function in a parseINT() 
-                     // if the number won't save
-    _maxHeight  = Math.max.apply(null, _eleHeight);
-        
-        
-}
+(function($) {
+  'use strict';
+  
+  function slideTab() {
+    var tab = $( '.tab' ),
+        con = $( '.pull-tab' ),
+        bod = $( 'html body' );
+    
+    con.hide();
+    con.find( tab ).hide();
+    
+    tab.on( 'click', function(e) {
+      bod.toggleClass( 'folder-open' );
+      con.toggle("slide");
+      con.find( tab ).toggle( 'slide' );
+    })
+  
+    function clickActions(){
+      if ( bod.hasClass( 'folder-open' ) ) {
+        bod.removeClass( 'folder-open' );
+        con.toggle( 'slide' );
+        con.find( tab ).hide();
+      }
+    }
+    
+    $('.overlay').on('click', function () {
+      clickActions();
+    })
+    $( '.site-header' ).on( 'click', function() {
+      clickActions();
+    })
+    
+    $( '.close' ).on( 'click', function() {
+      clickActions();
+    })
+    
+  }
+  
+  // Calls to functions
+  $(function() {
+    slideTab();    
+  })
+  
+})(jQuery);
